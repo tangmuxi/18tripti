@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18trip人格测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js">
+    </script>
+    <style>
+        :root {
+            --primary: #AAFF00;
+            --primary-dark: #8acc00;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --card2: #252525;
+            --border: #333;
+            --text: #ffffff;
+            --text2: #cccccc;
+            --text3: #999;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card);
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 3px 3px;
+            opacity: 0.8;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header .logo-icon {
+            font-size: 48px;
+            margin-bottom: 6px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(170, 255, 0, 0.4);
+            margin: 0;
+        }
+        .header .subtitle {
+            font-size: 0.85rem;
+            color: var(--text3);
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Progress */
+        .progress-wrap {
+            margin: 16px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .progress-bar-outer {
+            flex: 1;
+            height: 8px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 12px rgba(170, 255, 0, 0.5);
+        }
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text3);
+            white-space: nowrap;
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+        }
+        .page-indicator {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text3);
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .page-indicator span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Intro */
+        .intro-section {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .intro-msg {
+            background: var(--card2);
+            border-radius: var(--radius);
+            padding: 20px 16px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text2);
+            line-height: 1.8;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .intro-msg strong {
+            color: var(--primary);
+        }
+        .intro-msg .social {
+            display: inline-block;
+            background: #1a1a1a;
+            padding: 3px 10px;
+            border-radius: 6px;
+            margin: 2px 4px;
+            font-size: 0.82rem;
+            color: var(--primary);
+            border: 1px solid #333;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all var(--transition);
+            text-align: center;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #121212;
+            box-shadow: 0 6px 20px rgba(170, 255, 0, 0.35);
+        }
+        .btn-primary:hover {
+            background: #b8ff1a;
+            box-shadow: 0 8px 28px rgba(170, 255, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-primary:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 12px rgba(170, 255, 0, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-secondary:hover {
+            background: rgba(170, 255, 0, 0.08);
+        }
+        .btn-sm {
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            border-radius: 24px;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .btn-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        /* Question card */
+        .question-card {
+            background: var(--card2);
+            border-radius: var(--radius);
+            padding: 18px 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .question-card .q-num {
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .question-card .q-text {
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        .options-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: stretch;
+        }
+        .option-btn {
+            flex: 1;
+            min-width: 50px;
+            padding: 10px 6px;
+            font-size: 0.78rem;
+            text-align: center;
+            border-radius: 20px;
+            cursor: pointer;
+            border: 1.5px solid #444;
+            background: transparent;
+            color: #bbb;
+            transition: all 0.25s ease;
+            font-weight: 500;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+        .option-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(170, 255, 0, 0.05);
+        }
+        .option-btn.selected {
+            background: var(--primary);
+            color: #121212;
+            border-color: var(--primary);
+            font-weight: 700;
+            box-shadow: 0 0 16px rgba(170, 255, 0, 0.4);
+            transform: scale(1.03);
+        }
+        .option-label {
+            display: block;
+            font-size: 0.65rem;
+            opacity: 0.8;
+            margin-top: 1px;
+        }
+
+        /* Result */
+        .result-section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .result-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0 20px;
+            letter-spacing: 2px;
+        }
+        .match-cards {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+        .match-card {
+            background: var(--card2);
+            border-radius: var(--radius);
+            padding: 18px 14px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            max-width: 200px;
+            border: 1px solid var(--border);
+            transition: all var(--transition);
+            position: relative;
+        }
+        .match-card.top1 {
+            border-color: var(--primary);
+            box-shadow: 0 0 24px rgba(170, 255, 0, 0.25);
+            transform: translateY(-6px);
+        }
+        .match-card .rank-badge {
+            position: absolute;
+            top: -14px;
+            right: -10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #121212;
+            letter-spacing: 0;
+        }
+        .match-card.top1 .rank-badge {
+            background: var(--primary);
+        }
+        .match-card.top2 .rank-badge {
+            background: #ccc;
+            color: #333;
+        }
+        .match-card.top3 .rank-badge {
+            background: #daa520;
+            color: #fff;
+        }
+        .match-card .char-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 10px;
+            display: block;
+            border: 2px solid #444;
+            background: #1a1a1a;
+            transition: all 0.3s;
+        }
+        .match-card.top1 .char-img {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(170, 255, 0, 0.4);
+            width: 110px;
+            height: 110px;
+        }
+        .match-card .char-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+        .match-card .similarity {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+        .match-card.top2 .similarity {
+            color: #ddd;
+        }
+        .match-card.top3 .similarity {
+            color: #daa520;
+        }
+
+        /* 十维分析 */
+        .analysis-block {
+            background: var(--card2);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid var(--border);
+        }
+        .analysis-block h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .overall-analysis {
+            color: var(--text2);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+        .dimension-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.78rem;
+        }
+        .dimension-bar-label {
+            width: 64px;
+            text-align: right;
+            color: var(--text2);
+            flex-shrink: 0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        .dimension-bar-track {
+            flex: 1;
+            height: 18px;
+            background: #2a2a2a;
+            border-radius: 9px;
+            overflow: hidden;
+            position: relative;
+        }
+        .dimension-bar-fill {
+            height: 100%;
+            border-radius: 9px;
+            transition: width 0.8s ease;
+            background: var(--primary);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+        }
+        .dimension-bar-val {
+            width: 36px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.75rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+        .dim-detail {
+            font-size: 0.75rem;
+            color: #888;
+            margin-left: 72px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        /* Screenshot area */
+        #screenshot-area {
+            background: #121212;
+            padding: 20px;
+            border-radius: 16px;
+        }
+
+        /* Notification dot */
+        .nav-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #555;
+            margin: 0 3px;
+            transition: all 0.3s;
+        }
+        .nav-dot.active {
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+        .nav-dot.done {
+            background: #6a9e00;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                padding: 18px 12px;
+                border-radius: 14px;
+            }
+            .header h1 {
+                font-size: 1.4rem;
+                letter-spacing: 1px;
+            }
+            .question-card {
+                padding: 14px 10px;
+            }
+            .question-card .q-text {
+                font-size: 0.85rem;
+            }
+            .option-btn {
+                padding: 9px 4px;
+                font-size: 0.7rem;
+                border-radius: 16px;
+                min-width: 40px;
+            }
+            .option-label {
+                font-size: 0.6rem;
+            }
+            .match-card {
+                min-width: 110px;
+                max-width: 160px;
+                padding: 14px 10px;
+            }
+            .match-card .char-img {
+                width: 80px;
+                height: 80px;
+            }
+            .match-card.top1 .char-img {
+                width: 90px;
+                height: 90px;
+            }
+            .dimension-bar-label {
+                width: 50px;
+                font-size: 0.68rem;
+            }
+            .btn {
+                padding: 12px 28px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                padding: 36px 32px;
+            }
+            .question-card {
+                padding: 20px 20px;
+            }
+            .option-btn {
+                padding: 12px 10px;
+                font-size: 0.82rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-container">
+        <!-- 介绍页 -->
+        <div id="intro-page">
+            <div class="header">
+                <span class="logo-icon">🧬</span>
+                <h1>18trip人格测试</h1>
+                <p class="subtitle">—— 探索你的十维人格图谱 ——</p>
+            </div>
+            <div class="intro-section">
+                <div class="intro-msg">
+                    <p>大家好，我是网站制作人<strong>棠暮夕</strong>，制作这个网站只是为了娱乐，请大家不要对结果太过于认真～</p>
+                    <p style="margin-top:8px;">我的B站：<span class="social">@超级美味汉堡套餐</span></p>
+                    <p>小红书：<span class="social">@美味橘子妹</span></p>
+                    <p style="margin-top:8px;color:#aaa;">属性不撞的话欢迎大家来找我玩，有任何问题大家也可以向我提出！谢谢大家！</p>
+                </div>
+                <p style="color:var(--text3);font-size:0.8rem;margin-bottom:12px;">📋 共50道程度判断题 · 预计用时5-8分钟</p>
+                <p style="color:var(--text3);font-size:0.75rem;margin-bottom:16px;">请根据您的真实感受，对每道题的同意程度进行选择<br>（1=完全不同意 → 5=完全同意）</p>
+                <button class="btn btn-primary" onclick="startTest()" style="font-size:1.1rem;padding:16px 50px;">
+                    ⚡ 开始测试
+                </button>
+            </div>
+        </div>
+
+        <!-- 测试页 -->
+        <div id="test-page" style="display:none;">
+            <div class="header">
+                <h1 style="font-size:1.3rem;">18trip人格测试</h1>
+                <p class="subtitle" id="page-subtitle">第1页 / 共5页</p>
+            </div>
+            <div class="progress-wrap">
+                <div class="progress-bar-outer">
+                    <div class="progress-bar-inner" id="progress-bar" style="width:0%;"></div>
+                </div>
+                <span class="progress-text" id="progress-text">0/50</span>
+            </div>
+            <div class="page-indicator" id="page-dots"></div>
+            <div id="questions-container"></div>
+            <div class="btn-row" id="nav-buttons">
+                <button class="btn btn-secondary btn-sm" id="btn-prev" onclick="prevPage()" disabled>← 上一页</button>
+                <button class="btn btn-primary btn-sm" id="btn-next" onclick="nextPage()">下一页 →</button>
+                <button class="btn btn-primary btn-sm" id="btn-submit" onclick="submitTest()" style="display:none;">✨ 查看结果</button>
+            </div>
+        </div>
+
+        <!-- 结果页 -->
+        <div id="result-page" style="display:none;">
+            <div class="result-section" id="screenshot-area">
+                <div class="header">
+                    <span class="logo-icon">🎯</span>
+                    <h1>18trip人格测试</h1>
+                    <p class="subtitle">—— 你的十维人格分析报告 ——</p>
+                </div>
+
+                <div class="result-title">🔗 与你最相似的角色</div>
+                <div class="match-cards" id="match-cards-container"></div>
+
+                <div class="analysis-block" id="analysis-block">
+                    <h3>📊 整体性格分析</h3>
+                    <div class="overall-analysis" id="overall-analysis"></div>
+                    <h3>📈 十维人格详细分析</h3>
+                    <div id="dimension-bars"></div>
+                    <div id="dimension-details"></div>
+                </div>
+            </div>
+            <div class="btn-row" style="margin-top:20px;">
+                <button class="btn btn-primary btn-sm" onclick="saveScreenshot()">📸 保存为截图</button>
+                <button class="btn btn-secondary btn-sm" onclick="retakeTest()">🔄 重新测试</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== 角色数据 ====================
+            // 35个角色，每个角色10个维度的百分比数值（0值已调整为2-3的小值）
+            // 图片素材路径统一为 audio/角色名.jpg ，姓名已去掉编号前缀
+            const characters = [
+                { id: 1, name: '大黑可不可', dims: [18, 15, 12, 14, 6, 8, 14, 16, 12, 5],
+                    img: '<!-- 图片素材：角色01_大黑可不可 -->audio/大黑可不可.jpg' },
+                { id: 2, name: '西园练牙', dims: [6, 4, 12, 5, 18, 15, 4, 6, 10, 20],
+                    img: '<!-- 图片素材：角色02_西园练牙 -->audio/西园练牙.jpg' },
+                { id: 3, name: '鹿礼光', dims: [8, 18, 6, 20, 12, 4, 18, 14, 10, 6],
+                    img: '<!-- 图片素材：角色03_鹿礼光 -->audio/鹿礼光.jpg' },
+                { id: 4, name: '从云添', dims: [12, 10, 6, 14, 8, 10, 16, 12, 18, 4],
+                    img: '<!-- 图片素材：角色04_从云添 -->audio/从云添.jpg' },
+                { id: 5, name: '神名雪风', dims: [15, 14, 18, 10, 6, 16, 12, 12, 8, 9],
+                    img: '<!-- 图片素材：角色05_神名雪风 -->audio/神名雪风.jpg' },
+                { id: 6, name: '笛吹也千代', dims: [12, 8, 10, 6, 24, 10, 14, 6, 6, 4],
+                    img: '<!-- 图片素材：角色06_笛吹也千代 -->audio/笛吹也千代.jpg' },
+                { id: 7, name: '五十竹あく太', dims: [18, 12, 14, 6, 20, 16, 10, 8, 6, 10],
+                    img: '<!-- 图片素材：角色07_五十竹あく太 -->audio/五十竹あく太.jpg' },
+                { id: 8, name: '衣川季肋', dims: [4, 20, 8, 6, 14, 10, 8, 22, 6, 2],
+                    img: '<!-- 图片素材：角色08_衣川季肋 -->audio/衣川季肋.jpg' },
+                { id: 9, name: '斜木七基', dims: [16, 14, 18, 4, 12, 14, 6, 12, 6, 8],
+                    img: '<!-- 图片素材：角色09_斜木七基 -->audio/斜木七基.jpg' },
+                { id: 10, name: '久乐间潮', dims: [6, 14, 16, 12, 20, 12, 12, 10, 6, 2],
+                    img: '<!-- 图片素材：角色10_久乐间潮 -->audio/久乐间潮.jpg' },
+                { id: 11, name: '辉矢宗氏', dims: [10, 18, 14, 16, 8, 14, 14, 12, 4, 2],
+                    img: '<!-- 图片素材：角色11_辉矢宗氏 -->audio/辉矢宗氏.jpg' },
+                { id: 12, name: '雁金朔次郎', dims: [8, 16, 10, 20, 6, 14, 18, 12, 2, 4],
+                    img: '<!-- 图片素材：角色12_雁金朔次郎 -->audio/雁金朔次郎.jpg' },
+                { id: 13, name: '北片来人', dims: [12, 14, 14, 8, 12, 14, 10, 16, 8, 2],
+                    img: '<!-- 图片素材：角色13_北片来人 -->audio/北片来人.jpg' },
+                { id: 14, name: '片川几成', dims: [10, 20, 12, 8, 10, 12, 10, 14, 6, 4],
+                    img: '<!-- 图片素材：角色14_片川几成 -->audio/片川几成.jpg' },
+                { id: 15, name: '百目鬼潜', dims: [10, 14, 8, 16, 8, 6, 14, 12, 12, 2],
+                    img: '<!-- 图片素材：角色15_百目鬼潜 -->audio/百目鬼潜.jpg' },
+                { id: 16, name: '木之内太绪', dims: [6, 12, 14, 18, 8, 16, 12, 10, 8, 6],
+                    img: '<!-- 图片素材：角色16_木之内太绪 -->audio/木之内太绪.jpg' },
+                { id: 17, name: '夏烧千弥', dims: [18, 12, 12, 8, 12, 14, 8, 10, 8, 8],
+                    img: '<!-- 图片素材：角色17_夏烧千弥 -->audio/夏烧千弥.jpg' },
+                { id: 18, name: '北片生行', dims: [6, 12, 8, 18, 8, 8, 18, 10, 12, 2],
+                    img: '<!-- 图片素材：角色18_北片生行 -->audio/北片生行.jpg' },
+                { id: 19, name: '蜂乃屋凪', dims: [4, 16, 12, 6, 14, 18, 8, 12, 10, 2],
+                    img: '<!-- 图片素材：角色19_蜂乃屋凪 -->audio/蜂乃屋凪.jpg' },
+                { id: 20, name: '白光糖衣', dims: [8, 10, 6, 4, 22, 6, 12, 14, 18, 2],
+                    img: '<!-- 图片素材：角色20_白光糖衣 -->audio/白光糖衣.jpg' },
+                { id: 21, name: '白光琉衣', dims: [6, 14, 8, 12, 10, 6, 16, 14, 14, 2],
+                    img: '<!-- 图片素材：角色21_白光琉衣 -->audio/白光琉衣.jpg' },
+                { id: 22, name: '枣夜鹰', dims: [4, 12, 16, 18, 6, 16, 14, 8, 10, 2],
+                    img: '<!-- 图片素材：角色22_枣夜鹰 -->audio/枣夜鹰.jpg' },
+                { id: 23, name: '夜半子タろ', dims: [6, 22, 8, 6, 20, 10, 10, 14, 4, 2],
+                    img: '<!-- 图片素材：角色23_夜半子タろ -->audio/夜半子タろ.jpg' },
+                { id: 24, name: '丹尼尔', dims: [14, 12, 10, 6, 12, 12, 8, 16, 12, 2],
+                    img: '<!-- 图片素材：角色24_丹尼尔 -->audio/丹尼尔.jpg' },
+                { id: 25, name: '滨咲椛', dims: [6, 8, 14, 14, 6, 16, 14, 10, 12, 2],
+                    img: '<!-- 图片素材：角色25_滨咲椛 -->audio/滨咲椛.jpg' },
+                { id: 26, name: '滨咲枫', dims: [6, 8, 14, 14, 6, 16, 14, 10, 12, 2],
+                    img: '<!-- 图片素材：角色26_滨咲枫 -->audio/滨咲枫.jpg' },
+                { id: 27, name: '楪琴之丞', dims: [4, 10, 12, 20, 8, 14, 16, 8, 8, 2],
+                    img: '<!-- 图片素材：角色27_楪琴之丞 -->audio/楪琴之丞.jpg' },
+                { id: 28, name: '天元虎晴', dims: [12, 12, 14, 16, 4, 16, 14, 8, 6, 4],
+                    img: '<!-- 图片素材：角色28_天元虎晴 -->audio/天元虎晴.jpg' },
+                { id: 29, name: '押切水面', dims: [8, 10, 16, 14, 4, 18, 14, 8, 8, 2],
+                    img: '<!-- 图片素材：角色29_押切水面 -->audio/押切水面.jpg' },
+                { id: 30, name: '茂松八景', dims: [12, 18, 6, 6, 6, 6, 12, 16, 8, 10],
+                    img: '<!-- 图片素材：角色30_茂松八景 -->audio/茂松八景.jpg' },
+                { id: 31, name: '曾润', dims: [4, 12, 6, 18, 6, 8, 18, 10, 12, 6],
+                    img: '<!-- 图片素材：角色31_曾润 -->audio/曾润.jpg' },
+                { id: 32, name: '工乐梦乃介', dims: [8, 10, 12, 10, 14, 8, 10, 12, 10, 6],
+                    img: '<!-- 图片素材：角色32_工乐梦乃介 -->audio/工乐梦乃介.jpg' },
+                { id: 33, name: '儿玉连治', dims: [10, 12, 14, 8, 8, 16, 8, 14, 10, 2],
+                    img: '<!-- 图片素材：角色33_儿玉连治 -->audio/儿玉连治.jpg' },
+                { id: 34, name: '由蛇', dims: [12, 10, 14, 8, 10, 14, 8, 14, 10, 2],
+                    img: '<!-- 图片素材：角色34_由蛇 -->audio/由蛇.jpg' },
+                { id: 35, name: '烧卖', dims: [8, 6, 14, 4, 18, 20, 6, 10, 14, 2],
+                    img: '<!-- 图片素材：角色35_烧卖 -->audio/烧卖.jpg' },
+            ];
+
+            // ==================== 题目数据 ====================
+            // 10个维度，每个维度5道题，共50道题
+            // 维度: 1内外向 2感知/直觉 3理性/感性 4判断/感知 5神经质 6随和温柔 7负责敏锐 8开放创造 9动机价值观 10互动团队
+            const allQuestionsRaw = [
+                // 维度1：内外向程度 (5题)
+                { dim: 1, sub: 1, text: '在社交场合中，我通常会主动结识新朋友。' },
+                { dim: 1, sub: 2, text: '独处时我容易感到无聊或不安。' },
+                { dim: 1, sub: 3, text: '我喜欢成为大家关注的焦点。' },
+                { dim: 1, sub: 4, text: '在群体讨论中，我往往是发言最多的人之一。' },
+                { dim: 1, sub: 5, text: '比起独自思考，我更愿意通过与人交流来理清思路。' },
+                // 维度2：感知还是直觉 (5题，高分=直觉)
+                { dim: 2, sub: 1, text: '我对抽象概念和理论更感兴趣，而非具体事实。' },
+                { dim: 2, sub: 2, text: '我常常思考未来的可能性，而不是只专注于当下。' },
+                { dim: 2, sub: 3, text: '做决定时，我更依赖直觉而非过往经验。' },
+                { dim: 2, sub: 4, text: '我喜欢探索新奇的想法，即使它们不太实际。' },
+                { dim: 2, sub: 5, text: '我经常沉浸在自己的想象世界中。' },
+                // 维度3：理性还是感性 (5题，高分=感性)
+                { dim: 3, sub: 1, text: '做重要决定时，我更多地考虑他人的感受。' },
+                { dim: 3, sub: 2, text: '看到他人哭泣，我也会情不自禁地感到难过。' },
+                { dim: 3, sub: 3, text: '我认为原则可以被情感因素所软化。' },
+                { dim: 3, sub: 4, text: '在争论中，我更倾向于维护和谐而非坚持正确。' },
+                { dim: 3, sub: 5, text: '朋友的请求即使不太合理，我也很难拒绝。' },
+                // 维度4：判断还是感知 (5题，高分=感知/灵活)
+                { dim: 4, sub: 1, text: '我喜欢随遇而安，不太喜欢制定详细计划。' },
+                { dim: 4, sub: 2, text: '截止日期临近时，我往往会拖延到最后一刻。' },
+                { dim: 4, sub: 3, text: '我更喜欢灵活多变的生活方式。' },
+                { dim: 4, sub: 4, text: '计划被打乱时，我很容易适应并找到新的方向。' },
+                { dim: 4, sub: 5, text: '我觉得过多的规则和秩序会束缚我的创造力。' },
+                // 维度5：神经质程度 (5题)
+                { dim: 5, sub: 1, text: '我经常为小事感到焦虑不安。' },
+                { dim: 5, sub: 2, text: '情绪波动对我的日常生活影响很大。' },
+                { dim: 5, sub: 3, text: '我很容易感到压力山大。' },
+                { dim: 5, sub: 4, text: '事情没有按计划进行时，我会非常烦躁。' },
+                { dim: 5, sub: 5, text: '我经常反复思考过去的失误。' },
+                // 维度6：随和温柔 (5题)
+                { dim: 6, sub: 1, text: '我很容易原谅他人的错误。' },
+                { dim: 6, sub: 2, text: '我倾向于相信人性本善。' },
+                { dim: 6, sub: 3, text: '团队中我通常会主动退让以避免冲突。' },
+                { dim: 6, sub: 4, text: '我愿意花时间倾听朋友的烦恼。' },
+                { dim: 6, sub: 5, text: '即使对陌生人，我也会保持友善和耐心。' },
+                // 维度7：负责及敏锐 (5题)
+                { dim: 7, sub: 1, text: '我做事总是力求完美，注重每一个细节。' },
+                { dim: 7, sub: 2, text: '交给我的任务，我一定会按时且高质量地完成。' },
+                { dim: 7, sub: 3, text: '我经常主动发现并解决潜在的问题。' },
+                { dim: 7, sub: 4, text: '我习惯保持工作环境的整洁有序。' },
+                { dim: 7, sub: 5, text: '在承诺之前，我会仔细评估自己能否做到。' },
+                // 维度8：开放性与创造性 (5题)
+                { dim: 8, sub: 1, text: '我对各种艺术形式都有浓厚的兴趣。' },
+                { dim: 8, sub: 2, text: '我经常产生新颖独特的想法。' },
+                { dim: 8, sub: 3, text: '我喜欢尝试不同文化的美食和习俗。' },
+                { dim: 8, sub: 4, text: '解决问题时，我常能想到别人想不到的方法。' },
+                { dim: 8, sub: 5, text: '我对新事物的接受度很高，乐于改变。' },
+                // 维度9：动机与价值观良好程度 (5题)
+                { dim: 9, sub: 1, text: '我对自己的人生目标有清晰的认识。' },
+                { dim: 9, sub: 2, text: '我认为诚实和正直比成功更重要。' },
+                { dim: 9, sub: 3, text: '即使没有回报，我也会坚持做正确的事。' },
+                { dim: 9, sub: 4, text: '我的行动通常受到内在价值观的指引。' },
+                { dim: 9, sub: 5, text: '我愿意为了更大的目标牺牲眼前的利益。' },
+                // 维度10：互动风格与团队亲密程度 (5题)
+                { dim: 10, sub: 1, text: '我在团队中总是积极参与互动。' },
+                { dim: 10, sub: 2, text: '与队友建立深厚的关系对我来说很重要。' },
+                { dim: 10, sub: 3, text: '我经常主动关心团队成员的状态。' },
+                { dim: 10, sub: 4, text: '团队合作中，我注重建立信任和默契。' },
+                { dim: 10, sub: 5, text: '比起独自完成任务，我更享受团队协作的过程。' },
+            ];
+
+            // 固定混合排列（手动设计，确保相邻题目来自不同维度，同一维度间隔≥3题）
+            const mixedOrder = [
+                { displayIdx: 1, dim: 1, sub: 1 }, // 题1
+                { displayIdx: 2, dim: 6, sub: 1 },
+                { displayIdx: 3, dim: 3, sub: 1 },
+                { displayIdx: 4, dim: 8, sub: 1 },
+                { displayIdx: 5, dim: 5, sub: 1 },
+                { displayIdx: 6, dim: 2, sub: 1 },
+                { displayIdx: 7, dim: 9, sub: 1 },
+                { displayIdx: 8, dim: 4, sub: 1 },
+                { displayIdx: 9, dim: 7, sub: 1 },
+                { displayIdx: 10, dim: 10, sub: 1 },
+                { displayIdx: 11, dim: 5, sub: 2 },
+                { displayIdx: 12, dim: 1, sub: 2 },
+                { displayIdx: 13, dim: 8, sub: 2 },
+                { displayIdx: 14, dim: 3, sub: 2 },
+                { displayIdx: 15, dim: 6, sub: 2 },
+                { displayIdx: 16, dim: 10, sub: 2 },
+                { displayIdx: 17, dim: 2, sub: 2 },
+                { displayIdx: 18, dim: 9, sub: 2 },
+                { displayIdx: 19, dim: 4, sub: 2 },
+                { displayIdx: 20, dim: 7, sub: 2 },
+                { displayIdx: 21, dim: 3, sub: 3 },
+                { displayIdx: 22, dim: 6, sub: 3 },
+                { displayIdx: 23, dim: 1, sub: 3 },
+                { displayIdx: 24, dim: 9, sub: 3 },
+                { displayIdx: 25, dim: 5, sub: 3 },
+                { displayIdx: 26, dim: 8, sub: 3 },
+                { displayIdx: 27, dim: 2, sub: 3 },
+                { displayIdx: 28, dim: 10, sub: 3 },
+                { displayIdx: 29, dim: 4, sub: 3 },
+                { displayIdx: 30, dim: 7, sub: 3 },
+                { displayIdx: 31, dim: 9, sub: 4 },
+                { displayIdx: 32, dim: 5, sub: 4 },
+                { displayIdx: 33, dim: 2, sub: 4 },
+                { displayIdx: 34, dim: 7, sub: 4 },
+                { displayIdx: 35, dim: 1, sub: 4 },
+                { displayIdx: 36, dim: 6, sub: 4 },
+                { displayIdx: 37, dim: 10, sub: 4 },
+                { displayIdx: 38, dim: 4, sub: 4 },
+                { displayIdx: 39, dim: 8, sub: 4 },
+                { displayIdx: 40, dim: 3, sub: 4 },
+                { displayIdx: 41, dim: 7, sub: 5 },
+                { displayIdx: 42, dim: 2, sub: 5 },
+                { displayIdx: 43, dim: 10, sub: 5 },
+                { displayIdx: 44, dim: 5, sub: 5 },
+                { displayIdx: 45, dim: 8, sub: 5 },
+                { displayIdx: 46, dim: 1, sub: 5 },
+                { displayIdx: 47, dim: 4, sub: 5 },
+                { displayIdx: 48, dim: 6, sub: 5 },
+                { displayIdx: 49, dim: 9, sub: 5 },
+                { displayIdx: 50, dim: 3, sub: 5 },
+            ];
+
+            // 构建最终题目数组（按混合顺序）
+            const questions = mixedOrder.map(m => {
+                const q = allQuestionsRaw.find(r => r.dim === m.dim && r.sub === m.sub);
+                return {
+                    displayIdx: m.displayIdx,
+                    dim: m.dim,
+                    text: q.text,
+                };
+            });
+
+            const totalQuestions = questions.length; // 50
+            const questionsPerPage = 10;
+            const totalPages = Math.ceil(totalQuestions / questionsPerPage); // 5
+
+            // 用户答案存储
+            let userAnswers = new Array(totalQuestions).fill(null); // 索引0-49对应displayIdx-1
+            let currentPage = 0;
+
+            // ==================== 页面切换 ====================
+            function showPage(pageId) {
+                document.getElementById('intro-page').style.display = 'none';
+                document.getElementById('test-page').style.display = 'none';
+                document.getElementById('result-page').style.display = 'none';
+                document.getElementById(pageId).style.display = 'block';
+                if (pageId === 'result-page') {
+                    document.getElementById('main-container').style.maxWidth = '720px';
+                } else {
+                    document.getElementById('main-container').style.maxWidth = '680px';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            window.startTest = function() {
+                currentPage = 0;
+                userAnswers = new Array(totalQuestions).fill(null);
+                showPage('test-page');
+                renderPage(0);
+                updateProgress();
+            };
+
+            window.retakeTest = function() {
+                currentPage = 0;
+                userAnswers = new Array(totalQuestions).fill(null);
+                showPage('intro-page');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            // ==================== 渲染题目页 ====================
+            function renderPage(page) {
+                currentPage = page;
+                const start = page * questionsPerPage;
+                const end = Math.min(start + questionsPerPage, totalQuestions);
+                const container = document.getElementById('questions-container');
+                container.innerHTML = '';
+
+                for (let i = start; i < end; i++) {
+                    const q = questions[i];
+                    const card = document.createElement('div');
+                    card.className = 'question-card';
+                    card.style.animationDelay = (i - start) * 0.05 + 's';
+                    card.innerHTML = `
+                <span class="q-num">Q${q.displayIdx}</span>
+                <p class="q-text">${q.text}</p>
+                <div class="options-row">
+                  <button class="option-btn${userAnswers[i]===1?' selected':''}" onclick="selectAnswer(${i},1)" data-val="1">1<span class="option-label">完全不同意</span></button>
+                  <button class="option-btn${userAnswers[i]===2?' selected':''}" onclick="selectAnswer(${i},2)" data-val="2">2<span class="option-label">比较不同意</span></button>
+                  <button class="option-btn${userAnswers[i]===3?' selected':''}" onclick="selectAnswer(${i},3)" data-val="3">3<span class="option-label">中立</span></button>
+                  <button class="option-btn${userAnswers[i]===4?' selected':''}" onclick="selectAnswer(${i},4)" data-val="4">4<span class="option-label">比较同意</span></button>
+                  <button class="option-btn${userAnswers[i]===5?' selected':''}" onclick="selectAnswer(${i},5)" data-val="5">5<span class="option-label">完全同意</span></button>
+                </div>`;
+                    container.appendChild(card);
+                }
+
+                document.getElementById('page-subtitle').textContent = `第${page+1}页 / 共${totalPages}页`;
+                updateProgress();
+                updateNavButtons();
+                updatePageDots();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            window.selectAnswer = function(questionIndex, value) {
+                userAnswers[questionIndex] = value;
+                // 更新UI
+                const container = document.getElementById('questions-container');
+                const cards = container.querySelectorAll('.question-card');
+                const localIdx = questionIndex - currentPage * questionsPerPage;
+                if (localIdx >= 0 && localIdx < cards.length) {
+                    const btns = cards[localIdx].querySelectorAll('.option-btn');
+                    btns.forEach(b => {
+                        b.classList.toggle('selected', parseInt(b.dataset.val) === value);
+                    });
+                }
+                updateProgress();
+                updateNavButtons();
+            };
+
+            function updateProgress() {
+                const answered = userAnswers.filter(a => a !== null).length;
+                const pct = Math.round((answered / totalQuestions) * 100);
+                document.getElementById('progress-bar').style.width = pct + '%';
+                document.getElementById('progress-text').textContent = answered + '/50';
+            }
+
+            function updateNavButtons() {
+                const btnPrev = document.getElementById('btn-prev');
+                const btnNext = document.getElementById('btn-next');
+                const btnSubmit = document.getElementById('btn-submit');
+
+                btnPrev.disabled = currentPage === 0;
+                if (currentPage >= totalPages - 1) {
+                    btnNext.style.display = 'none';
+                    btnSubmit.style.display = 'inline-block';
+                } else {
+                    btnNext.style.display = 'inline-block';
+                    btnSubmit.style.display = 'none';
+                }
+                // 检查当前页是否全部作答
+                const start = currentPage * questionsPerPage;
+                const end = Math.min(start + questionsPerPage, totalQuestions);
+                const allAnswered = userAnswers.slice(start, end).every(a => a !== null);
+                if (currentPage < totalPages - 1) {
+                    btnNext.disabled = !allAnswered;
+                } else {
+                    btnSubmit.disabled = !allAnswered;
+                }
+            }
+
+            function updatePageDots() {
+                const dotsContainer = document.getElementById('page-dots');
+                let html = '';
+                for (let i = 0; i < totalPages; i++) {
+                    const start = i * questionsPerPage;
+                    const end = Math.min(start + questionsPerPage, totalQuestions);
+                    const allDone = userAnswers.slice(start, end).every(a => a !== null);
+                    let cls = 'nav-dot';
+                    if (i === currentPage) cls += ' active';
+                    else if (allDone) cls += ' done';
+                    html += `<span class="${cls}"></span>`;
+                }
+                dotsContainer.innerHTML = html;
+            }
+
+            window.prevPage = function() {
+                if (currentPage > 0) {
+                    renderPage(currentPage - 1);
+                }
+            };
+
+            window.nextPage = function() {
+                if (currentPage < totalPages - 1) {
+                    renderPage(currentPage + 1);
+                }
+            };
+
+            // ==================== 提交测试 ====================
+            window.submitTest = function() {
+                // 最终检查
+                const allAnswered = userAnswers.every(a => a !== null);
+                if (!allAnswered) {
+                    const unanswered = userAnswers.map((a, i) => a === null ? questions[i].displayIdx : null).filter(
+                        x => x !== null);
+                    alert('还有题目未作答：第 ' + unanswered.slice(0, 5).join('、') + (unanswered.length > 5 ? '...等共' +
+                        unanswered.length + '题' : '题') + ' 请完成所有题目后再查看结果。');
+                    // 跳转到第一个未作答的页面
+                    const firstUnanswered = userAnswers.findIndex(a => a === null);
+                    const targetPage = Math.floor(firstUnanswered / questionsPerPage);
+                    renderPage(targetPage);
+                    return;
+                }
+                // 计算结果
+                const result = calculateResult();
+                showResultPage(result);
+            };
+
+            function calculateResult() {
+                // 计算用户10个维度的原始总分（每个维度5题，每题1-5，总分5-25）
+                const dimScores = new Array(10).fill(0);
+                for (let i = 0; i < totalQuestions; i++) {
+                    const dimIdx = questions[i].dim - 1; // 0-9
+                    dimScores[dimIdx] += userAnswers[i];
+                }
+                // 映射到百分比范围（与角色数据范围2-24%对齐）
+                // 原始分5-25 -> 映射到2-22%
+                const userDims = dimScores.map(score => {
+                    const pct = 2 + ((score - 5) / 20) * 20;
+                    return Math.round(pct * 10) / 10;
+                });
+
+                // 计算与35个角色的欧几里得距离
+                const distances = characters.map(char => {
+                    let sumSq = 0;
+                    for (let d = 0; d < 10; d++) {
+                        const diff = userDims[d] - char.dims[d];
+                        sumSq += diff * diff;
+                    }
+                    return Math.sqrt(sumSq);
+                });
+
+                // 找到最大距离用于归一化
+                const maxDist = Math.max(...distances, 0.01);
+                const minDist = Math.min(...distances);
+
+                // 计算相似度百分比（距离越小相似度越高）
+                const similarities = distances.map((dist, idx) => ({
+                    idx,
+                    dist,
+                    similarity: Math.round((1 - (dist - minDist) / (maxDist - minDist + 0.001)) * 100),
+                    char: characters[idx],
+                }));
+
+                // 按相似度降序排列
+                similarities.sort((a, b) => b.similarity - a.similarity);
+
+                // 调整相似度使其有明显高低之分，且不为0
+                const top3 = similarities.slice(0, 3);
+                if (top3.length >= 3) {
+                    const raw1 = top3[0].similarity;
+                    const raw2 = top3[1].similarity;
+                    const raw3 = top3[2].similarity;
+                    const adj1 = Math.max(85, Math.min(96, raw1));
+                    const adj2 = Math.max(68, Math.min(adj1 - 8, raw2));
+                    const adj3 = Math.max(52, Math.min(adj2 - 9, raw3));
+                    top3[0].similarity = Math.round(adj1);
+                    top3[1].similarity = Math.round(adj2);
+                    top3[2].similarity = Math.round(adj3);
+                }
+
+                return {
+                    userDims,
+                    topMatches: top3,
+                    allSimilarities: similarities,
+                };
+            }
+
+            function showResultPage(result) {
+                showPage('result-page');
+                const { userDims, topMatches } = result;
+
+                // 渲染匹配角色卡片（图片已放大）
+                const cardsContainer = document.getElementById('match-cards-container');
+                const rankClasses = ['top1', 'top2', 'top3'];
+                const rankLabels = ['🥇', '🥈', '🥉'];
+                let cardsHTML = '';
+                topMatches.forEach((match, i) => {
+                    const rc = rankClasses[i];
+                    const rl = rankLabels[i];
+                    cardsHTML += `
+                <div class="match-card ${rc}">
+                  <span class="rank-badge">${rl}</span>
+                  <img src="${match.char.img.replace(/<!--.*?-->/g,'').trim()}" alt="${match.char.name}" class="char-img" onerror="this.style.background='#2a2a2a';this.style.borderColor='#555';">
+                  <div class="char-name">${match.char.name}</div>
+                  <div class="similarity">${match.similarity}%</div>
+                  <div style="font-size:0.7rem;color:#888;">相似度</div>
+                </div>`;
+                });
+                cardsContainer.innerHTML = cardsHTML;
+
+                // 整体性格分析
+                const overallEl = document.getElementById('overall-analysis');
+                const highDims = [];
+                const lowDims = [];
+                const dimNames = ['内外向', '感知/直觉', '理性/感性', '判断/感知', '神经质', '随和温柔', '负责敏锐', '开放创造', '动机价值观', '互动团队'];
+                userDims.forEach((val, i) => {
+                    if (val >= 14) highDims.push({ name: dimNames[i], val });
+                    if (val <= 7) lowDims.push({ name: dimNames[i], val });
+                });
+                let overallText = '';
+                if (highDims.length >= 2) {
+                    overallText +=
+                        `你在<strong style="color:var(--primary);">${highDims.map(d=>d.name).join('、')}</strong>方面表现突出，`;
+                } else if (highDims.length === 1) {
+                    overallText += `你在<strong style="color:var(--primary);">${highDims[0].name}</strong>方面表现突出，`;
+                }
+                if (lowDims.length >= 2) {
+                    overallText +=
+                        `而在<strong style="color:#ff9999;">${lowDims.map(d=>d.name).join('、')}</strong>方面相对较低。`;
+                } else if (lowDims.length === 1) {
+                    overallText += `而在<strong style="color:#ff9999;">${lowDims[0].name}</strong>方面相对较低。`;
+                }
+                if (highDims.length === 0 && lowDims.length === 0) {
+                    overallText = '你的各项人格维度较为均衡，没有特别突出或偏低的方面，是一个发展比较全面的人。';
+                }
+                overallText +=
+                    ` 整体来看，你与<strong style="color:var(--primary);">「${topMatches[0].char.name}」</strong>最为相似（相似度${topMatches[0].similarity}%），其次是「${topMatches[1].char.name}」（${topMatches[1].similarity}%）和「${topMatches[2].char.name}」（${topMatches[2].similarity}%）。`;
+                overallEl.innerHTML = overallText;
+
+                // 十维条形图
+                const barsContainer = document.getElementById('dimension-bars');
+                let barsHTML = '';
+                const maxDisplayVal = 24;
+                userDims.forEach((val, i) => {
+                    const barWidth = Math.max(3, Math.round((val / maxDisplayVal) * 100));
+                    barsHTML += `
+                <div class="dimension-bar-row">
+                  <span class="dimension-bar-label">${dimNames[i]}</span>
+                  <div class="dimension-bar-track">
+                    <div class="dimension-bar-fill" style="width:${barWidth}%;"></div>
+                  </div>
+                  <span class="dimension-bar-val">${Math.round(val)}%</span>
+                </div>`;
+                });
+                barsContainer.innerHTML = barsHTML;
+
+                // 十维详细分析
+                const detailsContainer = document.getElementById('dimension-details');
+                let detailsHTML = '';
+                const dimDescriptions = [
+                    { high: '你偏向外向，喜欢社交互动，从人群中获取能量。', mid: '你在内外向之间保持平衡，既能享受社交也能独处。',
+                        low: '你偏向内向，更喜欢独处和深度思考，社交消耗你的能量。' },
+                    { high: '你偏向直觉型，喜欢抽象思维和未来可能性，富有想象力。', mid: '你在感知与直觉之间平衡，既能关注现实也能展望未来。',
+                        low: '你偏向感知型，更关注具体事实和现实经验，脚踏实地。' },
+                    { high: '你偏向感性，做决策时优先考虑情感和人际和谐。', mid: '你在理性与感性之间平衡，能兼顾逻辑与人情。',
+                        low: '你偏向理性，做决策时更依赖逻辑和客观分析。' },
+                    { high: '你偏向灵活感知，喜欢随性自由，适应力强，享受开放的选择。', mid: '你在计划与灵活之间平衡，有适度的条理性和变通能力。',
+                        low: '你偏向判断型，喜欢计划和秩序，追求确定性和 closure。' },
+                    { high: '你的神经质程度较高，情绪敏感，容易感到焦虑和压力。', mid: '你的情绪稳定性适中，偶尔会感到压力但能较好应对。',
+                        low: '你的情绪非常稳定，抗压能力强，不易被小事困扰。' },
+                    { high: '你非常随和温柔，善解人意，容易与人相处，富有同理心。', mid: '你的随和程度适中，在坚持自我与迁就他人之间取得平衡。',
+                        low: '你比较有主见，不轻易妥协，更注重原则和底线。' },
+                    { high: '你非常负责且敏锐，做事认真细致，有很强的责任心和洞察力。', mid: '你的责任心和敏锐度适中，能认真完成任务也懂得灵活变通。',
+                        low: '你可能比较随性，不太拘泥于细节，更关注大局而非琐碎事务。' },
+                    { high: '你极具开放性和创造力，对新事物充满好奇，富有艺术感和创新精神。', mid: '你的开放性适中，对新事物持适度开放态度，有一定的创造力。',
+                        low: '你比较传统和务实，偏好熟悉的事物，对剧烈变化持谨慎态度。' },
+                    { high: '你的动机与价值观非常正向，有清晰的人生目标和坚定的道德准则。', mid: '你的动机与价值观较为健康，在理想与现实之间保持平衡。',
+                        low: '你可能还在探索自己的人生目标和价值观，处于成长阶段。' },
+                    { high: '你在团队中互动积极，重视亲密关系，是团队中的粘合剂。', mid: '你在团队互动中保持适度参与，既能协作也能独立工作。',
+                        low: '你更倾向于独立工作，在团队中保持一定的距离感和自主性。' },
+                ];
+                userDims.forEach((val, i) => {
+                    let desc;
+                    if (val >= 14) desc = dimDescriptions[i].high;
+                    else if (val <= 7) desc = dimDescriptions[i].low;
+                    else desc = dimDescriptions[i].mid;
+                    detailsHTML +=
+                        `<p class="dim-detail"><strong>${dimNames[i]}（${Math.round(val)}%）：</strong>${desc}</p>`;
+                });
+                detailsContainer.innerHTML = detailsHTML;
+
+                // 动画条形图
+                setTimeout(() => {
+                    const fills = document.querySelectorAll('.dimension-bar-fill');
+                    fills.forEach(f => {
+                        const w = f.style.width;
+                        f.style.width = '0%';
+                        requestAnimationFrame(() => {
+                            f.style.width = w;
+                        });
+                    });
+                }, 200);
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // ==================== 截图保存 ====================
+            window.saveScreenshot = function() {
+                const screenshotArea = document.getElementById('screenshot-area');
+                screenshotArea.style.animation = 'none';
+                const btnRow = document.querySelector('#result-page .btn-row');
+                if (btnRow) btnRow.style.display = 'none';
+
+                html2canvas(screenshotArea, {
+                    backgroundColor: '#121212',
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false,
+                }).then(canvas => {
+                    screenshotArea.style.animation = '';
+                    if (btnRow) btnRow.style.display = '';
+                    const link = document.createElement('a');
+                    link.download = '18trip人格测试结果.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                }).catch(err => {
+                    screenshotArea.style.animation = '';
+                    if (btnRow) btnRow.style.display = '';
+                    alert('截图保存失败，请尝试使用浏览器截图工具。');
+                    console.error(err);
+                });
+            };
+
+            // ==================== 初始化 ====================
+            document.addEventListener('DOMContentLoaded', () => {
+                showPage('intro-page');
+                updatePageDots();
+            });
+
+            // 键盘导航
+            document.addEventListener('keydown', (e) => {
+                const testPage = document.getElementById('test-page');
+                if (testPage.style.display !== 'none' && testPage.style.display !== '') {
+                    if (e.key === 'ArrowRight' && !e.ctrlKey && !e.metaKey) {
+                        e.preventDefault();
+                        if (currentPage < totalPages - 1 && !document.getElementById('btn-next').disabled) {
+                            nextPage();
+                        }
+                    }
+                    if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.metaKey) {
+                        e.preventDefault();
+                        if (currentPage > 0) {
+                            prevPage();
+                        }
+                    }
+                    if (e.key === 'Enter' && currentPage >= totalPages - 1) {
+                        const btnSubmit = document.getElementById('btn-submit');
+                        if (btnSubmit.style.display !== 'none' && !btnSubmit.disabled) {
+                            e.preventDefault();
+                            submitTest();
+                        }
+                    }
+                }
+            });
+
+            console.log('🧬 18trip人格测试已就绪');
+            console.log('📋 共' + totalQuestions + '道程度判断题 | ' + totalPages + '页 | 35个角色结果');
+            console.log('🎨 主色调：#AAFF00 | 深色主题 | 响应式布局');
+            console.log('💡 提示：使用键盘左右箭头键可在题目页面间切换');
+            console.log('📸 结果页面支持截图保存功能');
+            console.log('🖼️ 35个角色图片路径已统一为 audio/ 文件夹，请在代码中搜索“图片素材”替换实际图片');
+            console.log('🗑️ 结果主图已移除，角色头像已放大。');
+        })();
+    </script>
+</body>
+</html>
